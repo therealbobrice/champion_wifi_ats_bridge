@@ -1,0 +1,700 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="./styles/index.min.css">
+    <script src="./scripts/index.min.js"></script>
+    <!--
+            <script src="./scripts/Virtual_Data.js"></script>
+    -->
+</head>
+
+<body style="font-family: Industry Demi , sans-serif;font-style: normal;font-weight: 200;width:100%;margin:auto;background-color:#FFFFFF;overflow-x:hidden">
+    <div class="fixed" style="width:50%;height:100px;background-color:rgba(200,200,200,0.9);z-index:1020;border: solid 2px #505050;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px;margin-top:150px;margin-right:25%;display:none" id="ShowMsg">
+        <div id="MsgV" style="margin-left:10%;margin-top:25px;height:50px;width:80%;color:rgba(20,20,20,1);font-size:18px">Error</div>
+    </div>
+
+    <div class="fixed" style="width:100%;height:61.5px;background-color:#1A1918 " id="Div1" onclick="ShowVersionInfo();">
+        <div style="width:100%;height:1.5px;background-color:#FFDF00"></div>
+        <div style="width:100%;height:60px;z-index:99999;" id="LogoAdDiv">
+            <img style="width :140px;height:40px;margin-top:10px;z-index:99999;margin-left:15px" id="CImg" src="images/champion.png">
+            <img style="width :140px;height:40px;margin-top:10px;float:right;z-index:99999;margin-right:15px" id="AImg" src="images/axis.png">
+        </div>
+    </div>
+    <div class="fixed" style="width:100%;height:110px;background-color:#E7E7E9;top:61.5px">
+        <div style="width:100%;height:60px;line-height:60px;vertical-align:middle;font-size:1.0em;font-weight:600;padding-left:15px" id="DDD">
+            Home Standby Generator Settings
+        </div>
+        <div style="width:100%;height:50px;line-height:50px;vertical-align:middle;font-size:1.0em;font-weight:600;padding-left:15px" id="EEE">
+            <span>SN: </span>
+            <span id="CPID">Champion-0000</span>
+        </div>
+    </div>
+    <div class="fixedDown" style="width:100vw;background-color:#777577;display:none " id="SaveDiv">
+        <div id="SaveDivInside" style="height:70px;width:320px;">
+            <div class="ButtonD1 BGW" id="Button4">
+                <img class="BI" src="images/check.png" id="IMG1">
+                <span class="BTital1">APPLY CHANGES</span>
+            </div>
+            <div class="ButtonD1 ButtonD2 BBW" id="Button5">
+                <img class="BI" src="images/close.png" id="IMG1">
+                <span class="BTital1">REVERT CHANGES</span>
+            </div>
+        </div>
+    </div>
+    <div class="AnchorD" id="ACButton">
+        <div class="AnchorB myMOUSE" style="display:inline-block" id="SPL" onclick="ShowData('Data');">
+            <img class="SPLimg" src="images/DataList.png" id="SPLImg">
+        </div>
+        <div id="DisplacementButton" style="display:inline-block">
+            <div class="AnchorB myMOUSE" style="background-image: url('images/gotop.png');" id="Gotop" onclick="GoGo(this.id)"></div>
+            <div class="AnchorB myMOUSE" style="background-image: url('images/top.png');" id="Top" onclick="GoGo(this.id)"></div>
+            <div class="AnchorB myMOUSE" style="background-image: url('images/Down.png');" id="Down" onclick="GoGo(this.id)"></div>
+        </div>
+    </div>
+    <div id="WDW" style="height:300px;height:100vh;position:relative;top:175px;right:0;padding-left:15px">
+        <div id="SettingPage" class="FrmDiv">
+            <div class="Tital_">
+                <span>Date and Time</span>
+            </div>
+            <div id="TiData" style="visibility:visible;position: relative;">
+                <div class="data">
+                    <div class="DTital_1" style="width:80px"><span>Date: </span></div>
+                    <div style="display: inline-block;"><span style="font-weight:500" id="Div0_0">--</span></div>
+                </div>
+                <hr class="HrCss">
+                <div id="HID0" style="visibility:hidden;position: absolute;top:0; left: 0px;">
+                    <div class="data">
+                        <div class="DTital_1" style="width:80px"><span>Day: </span></div>
+                        <div style="display: inline-block;"><span style="font-weight:500" id="Div0_1">--</span></div>
+                    </div>
+                    <div class="data">
+                        <div class="DTital_1"><span>Maintainess Time: </span></div>
+                        <div style="display: inline-block;"><span style="font-weight:500" id="Div0_3">--</span></div>
+                    </div>
+                </div>
+                <div class="data">
+                    <div class="DTital_1" style="width:80px"><span>Time: </span></div>
+                    <div style="display: inline-block;"><span style="font-weight:500" id="Div0_2">--</span></div>
+                </div>
+                <hr class="HrCss">
+            </div>
+            <div id="TiSet" style="visibility:hidden;position: absolute;top:0; left: 0px;">
+                <div class="data">
+                    <div class="ButtonD myMOUSE" onclick="GetTimeNow()" id="GetTimeNow">
+                        <span class="BTital">USE THIS DEVICE’S DATE & TIME </span>
+                        <img class="BI" src="images/Time.png">
+                    </div>
+                </div>
+                <div class="data">
+                    <div class="DTital_1">
+                        <span style="display: inline-block;width:60px;">Date: </span>
+                        <div class="DSelect">
+                            <div class="SH"><select id="S0_0" class="SelectCss" onchange="ChangeDay();"></select></div>
+                            <div class="SH"><select id="S0_1" class="SelectCss" onchange="ChangeDay();"></select></div>
+                            <div class="SH"><select id="S0_2" class="SelectCss" onchange="ChangeDay();"></select></div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="HrCss">
+                <div class="data">
+                    <div class="DTital_1">
+                        <span style="display: inline-block;width:60px;">Time: </span>
+                        <div class="DSelect">
+                            <div class="SH"><select id="S0_4" class="SelectCss"></select></div>
+                            <div class="SH"><select id="S0_5" class="SelectCss"></select></div>
+                            <div class="SH"><select id="S0_6" class="SelectCss"></select></div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="HrCss">
+                <div class="data">
+                    <div class="DTital_1">
+                        <span style="display: inline-block;width:60px;">Day: </span>
+                        <div class="DSelect">
+                            <div class="SH"><select id="S0_3" class="SelectCss" disabled="disabled"></select></div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="HrCss">
+                <div class="data" style="display:none">
+                    <div class="DTital_1">
+                        <span style="display: inline-block;">Maintainess Time: </span>
+                        <div class="DSelect">
+                            <div class="SH"><select id="S0_7" class="SelectCss"></select></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="data">
+                <div class="DTital_1" style="width:150px"><span>Day Light Saving: </span></div>
+                <div style="display: inline-block;"><span style="font-weight:500" id="Div0_4">--</span></div>
+            </div>
+            <div class="data">
+                <div class="ButtonD myMOUSE" onclick="TimeEdit()" id="Button1">
+                    <span class="BTital" id="Label1">EDIT DATE & TIME </span>
+                    <img class="BI" src="images/PAN.png" id="IMG1">
+                </div>
+            </div>
+            <div class="data" id="CancelB1" style="display:none">
+                <div class="ButtonD BR myMOUSE" onclick="CancalTimeSet()">
+                    <span class="BTital">CANCEL EDIT </span>
+                </div>
+            </div>
+            <div class="Tital_" onclick="WriteDefine('Exer')">
+                <span>Generator Exercise</span><br>
+                <span class="GS">(Automated Maintenance Running)</span>
+            </div>
+            <div id="EFData" style="visibility:visible;position: relative;">
+                <div class="data">
+                    <div class="DTital_1" style="width:100px"><span>Frequency: </span></div>
+                    <div style="display: inline-block;"><span style="font-weight:500" id="Div0_5">--</span></div>
+                </div>
+                <hr class="HrCss">
+                <div class="data">
+                    <div class="DTital_1" style="width:100px"><span>Day: </span></div>
+                    <div style="display: inline-block;"><span style="font-weight:500" id="Div0_6">--</span></div>
+                </div>
+                <hr class="HrCss">
+                <div class="data">
+                    <div class="DTital_1" style="width:100px"><span>Time: </span></div>
+                    <div style="display: inline-block;"><span style="font-weight:500" id="Div0_7">--</span></div>
+                </div>
+            </div>
+            <div id="EFSet" style="visibility:hidden;position: absolute;top:0; left: 0px;">
+                <div class="data">
+                    <div class="DTital_1">
+                        <span style="display: inline-block;width:60px">Freq: </span>
+                        <div class="DSelect">
+                            <div class="SH"><select id="S1_0" class="SelectCss" onchange="CheckFeq();"></select></div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr class="HrCss">
+                <div class="data">
+                    <div class="DTital_1">
+                        <span style="display: inline-block;width:60px">Day: </span>
+                        <div class="DSelect">
+                            <div class="SH"><select id="S1_1" class="SelectCss"></select></div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr class="HrCss">
+                <div class="data">
+                    <div class="DTital_1">
+                        <span style="display: inline-block;width:60px">Hour: </span>
+                        <div class="DSelect">
+                            <div class="SH"><select id="S1_2" class="SelectCss"></select></div>
+                            <div class="SH"><select id="S1_3" class="SelectCss"></select></div>
+                            <div class="SH"><select id="S1_4" class="SelectCss"></select></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <hr class="HrCss">
+            <div class="data">
+                <div class="ButtonD myMOUSE" style="" onclick="ExerciseEdit()" id="Button2">
+                    <span class="BTital" id="Label2">EDIT EXERCISE FREQUENCY</span>
+                    <img class="BI" src="images/PAN.png" id="IMG2">
+                </div>
+            </div>
+            <div class="data" id="CancelB2" style="display:none">
+                <div class="ButtonD BR myMOUSE" onclick="CancalExerSet()">
+                    <span class="BTital">CANCEL EDIT</span>
+                </div>
+            </div>
+            <div class="Tital_">
+                <span>Wireless Network</span><br>
+            </div>
+            <div class="data" style="height:50px;">
+                <div class="DTital_1" style="width:150px"><span>Internet Service: </span></div>
+                <div style="display: inline-block;" id="Div0_8"><span style="font-weight:500">--</span></div>
+            </div>
+            <div id="HID1">
+                <div class="data" style="min-height:30px;margin-bottom:5px">
+                    <div class="DTital_1" style="width:150px"><span>Web Page Mode: </span></div>
+                    <div style="display: inline-block;" id="Div0_9"><span style="font-weight:500">--</span></div><br>
+                </div>
+            </div>
+            <div>
+                <div class="data" style="min-height:30px;margin-top:0">
+                    <div class="DTital_1"><span style="font-size:14px" id="INMode">IP : </span><span style="font-size:14px" id="INIP">--</span></div>
+                </div>
+            </div>
+            <div id="SH" style="visibility:hidden;position: absolute;top:0; left: 0px;margin:0.5vh 0 0.5vh 0">
+                <div class="data">
+                    <div class="ButtonD myMOUSE" onclick="ShowDetail()">
+                        <span class="BTital">Show Detail</span>
+                        <img class="BI" src="images/Settings.png">
+                    </div>
+                </div>
+            </div>
+            <div id="HID2" style="visibility:hidden;position: absolute;top:0; left: 0px;">
+                <div style="border:solid 3px #000000;-moz-border-radius: 5px;-webkit-border-radius:5px;border-radius:5px;max-width:90vw;margin-top:10px;margin-bottom:10px">
+                    <div class="data">
+                        <div class="DTital_1" style="width:150px"><span id="IPFromTital">Client Mode </span></div>
+                    </div>
+                    <div class="data" style="min-height:50px">
+                        <div class="DTital_1" style="width:150px"><span>Internet Name(SSID): </span></div>
+                        <div style="display: inline-block;" id="Div0_10"><span style="font-weight:500">--</span></div>
+                    </div>
+                    <div id="SWSSDiv" style="display:none"></div>
+                    <div class="data">
+                        <div class="ButtonD myMOUSE" onclick="ShowWifiSS()">
+                            <span class="BTital" id="SWSS">Show Signal Strength</span>
+                            <img class="BI" src="images/DataList.png">
+                        </div>
+                    </div>
+                    <div class="data">
+                        <div class="DTital_3" style="width:150px"><span style="width:100px;">Password: </span></div>
+                        <div id="Div0_11"><input id="S2_3" class="InputCss"></div>
+                    </div>
+                    <div class="data" id="IPDiv_1">
+                        <div class="DTital_3" style="width:150px">
+                            <span style="width:100px">Web Address: </span>
+                            <span style="width:100px;font-size:10px;font-weight:400">(Example:192.168.20.90)</span>
+                        </div>
+
+                        <div id="Div0_12">
+                            <input id="S2_4_0" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP" style="margin-left:5px"><span class="IPs">.</span>
+                            <input id="S2_4_1" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP"><span class="IPs">.</span>
+                            <input id="S2_4_2" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP"><span class="IPs">.</span>
+                            <input id="S2_4_3" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP">
+                        </div>
+                    </div>
+                    <div class="data" id="IPDiv_2">
+                        <div class="DTital_3" style="width:150px">
+                            <span style="width:100px">Mask: </span>
+                            <span style="width:100px;font-size:10px;font-weight:400">(Example:255.255.255.0)</span>
+                        </div>
+                        <div id="Div0_13">
+                            <input id="S2_5_0" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP" style="margin-left:5px"><span class="IPs">.</span>
+                            <input id="S2_5_1" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP"><span class="IPs">.</span>
+                            <input id="S2_5_2" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP"><span class="IPs">.</span>
+                            <input id="S2_5_3" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP">
+                        </div>
+                    </div>
+                    <div class="data" id="IPDiv_3">
+                        <div class="DTital_3" style="width:150px">
+                            <span style="width:100px">Gateway: </span>
+                            <span style="width:100px;font-size:10px;font-weight:400">(Example:192.168.20.1)</span>
+                        </div>
+                        <div id="Div0_14">
+                            <input id="S2_6_0" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP" style="margin-left:5px"><span class="IPs">.</span>
+                            <input id="S2_6_1" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP"><span class="IPs">.</span>
+                            <input id="S2_6_2" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP"><span class="IPs">.</span>
+                            <input id="S2_6_3" onfocus="IPCh(this.id)" onblur="IPFOUT(this.id)" class="InputIP">
+                        </div>
+                    </div>
+                    <div class="data">
+                        <div class="DTital_1" style="width:150px"><span style="width:70px">Security: </span></div>
+                        <div class="SH" id="Div0_15"><select id="S2_7" class="SelectCss"></select></div>
+                    </div>
+                </div>
+            </div>
+            <div class="data">
+                <div class="ButtonD myMOUSE" style="" onclick="NETEdit()" id="Button3">
+                    <span class="BTital" id="Label3">EDIT NETWORK SETTINGS</span>
+                    <img class="BI" src="images/PAN.png" id="IMG3">
+                </div>
+            </div>
+            <div id="HID3" style="visibility:hidden;position: absolute;top:0; left: 20px;">
+                <div class="data">
+                    <div class="ButtonD BR myMOUSE" onclick="Cancel_NetWork_Setting();" id="Button6">
+                        <span class="BTital" id="Label4">CANCEL SETTINGS</span>
+                    </div>
+                </div>
+            </div>
+            <hr class="HrCss">
+        </div>
+        <div id="DataPage" class="FrmDiv" style="display:none">
+            <div class="data" style="margin-left: 0px;">
+                <div class="DTital_1" style="width:120px"><span>UpdateTime: </span></div>
+                <div style="display: inline-block;"><span style="font-weight:500" id="D1_00">0000-00-00 00:00:00</span></div>
+            </div>
+            <div class="PageList">
+                <div class="PageButtonO myMOUSE"><div class="PageButtonI PBonI" id="PB_00" onclick="ButtonClick(this.id)">ATS</div></div>
+                <div class="PageButtonO myMOUSE"><div class="PageButtonI" id="PB_01" onclick="ButtonClick(this.id)">GEN</div></div>
+                <div class="PageButtonO myMOUSE"><div class="PageButtonI" id="PB_02" onclick="ButtonClick(this.id)">LMM</div></div>
+                <div class="PageButtonO myMOUSE" style="width:35px;height:35px;display:none" onclick="SNPage()">
+                    <div class="PageButtonI" style="width:35px;height:35px">
+                        <img style="width:30px;height:30px;margin:2.5px" src="images/QuestionMark.png">
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div id="Page3" style="display:none">
+                <div class="GDTital_0" id="P3Ci_0">
+                    <span>LMM Data</span>
+                </div>
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>LMM Relay0 Demand: </span></span>
+                    <span id="D3_00" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>LMM Relay1 Demand: </span></span>
+                    <span id="D3_01" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>LMM Relay2 Demand: </span></span>
+                    <span id="D3_02" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>LMM Relay3 Demand: </span></span>
+                    <span id="D3_03" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Load AC1 Demand: </span></span>
+                    <span id="D3_04" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Load AC2 Demand: </span></span>
+                    <span id="D3_05" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss1">
+                <div class="GDTital_0" id="P3Ci_0">
+                    <span>Load Shed Setting</span>
+                </div>
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Load Shed Setting: </span></span>
+                    <span id="knobL" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div style="width:100%;height:25px;">
+                    <div class="Knob_Magni">*10</div>
+                    <div class="Knob_Magni">*1</div>
+                </div>
+                <div style="width:100%">
+                    <div class="knob_Outside">
+                        <div class="Knob">
+                            <div class="Round_Out">
+                                <img class="Knob_arrow A0" src="images/ARRUp.png" id="KA1">
+                            </div>
+                            <div class="NumSpan N0">0</div>
+                            <div class="NumSpan N1">1</div>
+                            <div class="NumSpan N2">2</div>
+                            <div class="NumSpan N3">3</div>
+                            <div class="NumSpan N4">4</div>
+                            <div class="NumSpan N5">5</div>
+                            <div class="NumSpan N6">6</div>
+                            <div class="NumSpan N7">7</div>
+                            <div class="NumSpan N8">8</div>
+                            <div class="NumSpan N9">9</div>
+                        </div>
+                    </div>
+                    <div class="knob_Outside">
+                        <div class="Knob">
+                            <div class="Round_Out">
+                                <img class="Knob_arrow A0" src="images/ARRUp.png" id="KA2">
+                            </div>
+                            <div class="NumSpan N0">0</div>
+                            <div class="NumSpan N1">1</div>
+                            <div class="NumSpan N2">2</div>
+                            <div class="NumSpan N3">3</div>
+                            <div class="NumSpan N4">4</div>
+                            <div class="NumSpan N5">5</div>
+                            <div class="NumSpan N6">6</div>
+                            <div class="NumSpan N7">7</div>
+                            <div class="NumSpan N8">8</div>
+                            <div class="NumSpan N9">9</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="Page2" style="display:none">
+                <div class="GDTital_0" id="P2Ci_0">
+                    <span>Gen Status</span>
+                </div>
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Genset Status: </span></span>
+                    <span id="D2_08" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Genset Event: </span></span>
+                    <span id="D2_07" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss1">
+                <div class="GDTital_0">
+                    <span>Gen Data</span>
+                </div>
+                <div class="Gendata" style="display:none">
+                    <span class="GDTital_1"><span>Genset Time: </span></span>
+                    <span id="D2_00" class="ML5"><span>--</span></span>
+                </div>
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>ACV L12: </span></span>
+                    <span id="D2_01" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Freq: </span></span>
+                    <span id="D2_02" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Battery Volt: </span></span>
+                    <span id="D2_03" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Crank Total Attempts: </span></span>
+                    <span id="D2_04" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Run: </span></span>
+                    <span id="D2_05" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Maintain: </span></span>
+                    <span id="D2_06" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss1">
+                <div class="GDTital_0" id="P2Ci_5">
+                    <span>Gen DIP Switch Status</span>
+                </div>
+                <div class="ParaListFrm" id="ParaListFrm_0_2" style="width:210px;background-color:rgba(20,20,20,1)">
+
+                </div>
+                <hr class="HrCss">
+                <div id="SP1_Lable" style="display:none"></div>
+                <div class="Gendata">
+                    <div class="ButtonD" onclick="ShowNote('SP1_B')" id="SP1_B">
+                        <span class="BTital" id="SP1_BL">Show Switch Note</span>
+                        <img class="BI" src="images/DataList.png" id="SP1_BI">
+                    </div>
+                </div>
+                <BR>
+                <hr class="HrCss1">
+                <div>
+                    <div class="GDTital_0" id="P2Ci_1">
+                        <span>GENSET A Set Light</span>
+                    </div>
+                    <div id="GASL" style="width:100%"></div>
+                </div>
+                <hr class="HrCss1">
+                <div>
+                    <div class="GDTital_0" id="P2Ci_2">
+                        <span>GENSET B Set Light</span>
+                    </div>
+                    <div id="GBSL" style="width:100%"></div>
+                </div>
+                <hr class="HrCss1">
+                <div>
+                    <div class="GDTital_0" id="P2Ci_3">
+                        <span>Gen Digital Input</span>
+                    </div>
+                    <div id="GDI" style="width:100%"></div>
+                </div>
+                <hr class="HrCss1">
+                <div>
+                    <div class="GDTital_0" id="P2Ci_4">
+                        <span>Gen Relay Output</span>
+                    </div>
+                    <div id="GRO" style="width:100%"></div>
+                </div>
+            </div>
+
+
+            <div id="Page1">
+                <div class="GDTital_0" id="P1Ci_0">
+                    <span>ATS Status</span>
+                </div>
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>ATS Time:  </span></span>
+                    <span id="D1_01" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>System Status:</span></span>
+                    <span id="D1_02" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Event:  </span></span>
+                    <span id="D1_03" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss1">
+
+                <div class="GDTital_0" id="P1Ci_1">
+                    <span>ATS Data</span>
+                </div>
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Util L1-N:</span></span>
+                    <span id="D1_04" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Util L2-N:</span></span>
+                    <span id="D1_12" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Util L1-L2:</span></span>
+                    <span id="D1_13" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Util AC Freq:</span></span>
+                    <span id="D1_05" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>GEN L1-N:</span></span>
+                    <span id="D1_06" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>GEN L2-N:</span></span>
+                    <span id="D1_14" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>GEN L1-L2:</span></span>
+                    <span id="D1_15" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>GEN AC Freq:</span></span>
+                    <span id="D1_07" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss1">
+                <div class="GDTital_0" id="P1Ci_2">
+                    <span>ATS Load Data</span>
+                </div>
+
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>L1:</span></span>
+                    <span id="D1_11" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>L2:</span></span>
+                    <span id="D1_20" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>L12:</span></span>
+                    <span id="D1_08" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>L1N KW:</span></span>
+                    <span id="D1_09" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>L2N KW:</span></span>
+                    <span id="D1_16" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Total KW:</span></span>
+                    <span id="D1_17" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>L1N KVA:</span></span>
+                    <span id="D1_10" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>L2N KVA:</span></span>
+                    <span id="D1_18" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss">
+                <div class="Gendata">
+                    <span class="GDTital_1"><span>Total KVA:</span></span>
+                    <span id="D1_19" class="ML5"><span>--</span></span>
+                </div>
+                <hr class="HrCss1">
+                <div>
+                    <div class="GDTital_0" id="P1Ci_3">
+                        <span>ATS Lit (On Board LED Indicator)</span>
+                    </div>
+                    <div id="ATSLIT" style="width:100%"></div>
+                </div>
+
+                <hr class="HrCss1">
+                <div>
+                    <div class="GDTital_0" id="P1Ci_4">
+                        <span>ATS DIP Switch Status</span>
+                    </div>
+                    <div class="ParaListFrm" id="ParaListFrm_0_1">
+
+                    </div>
+                    <hr class="HrCss">
+                    <div id="SP0_Lable" style="display:none"></div>
+                    <div class="Gendata">
+                        <div class="ButtonD" onclick="ShowNote('SP0_B')" id="SP0_B">
+                            <span class="BTital" id="SP0_BL">Show Switch Note</span>
+                            <img class="BI" src="images/DataList.png" id="SP0_BI">
+                        </div>
+                    </div>
+                    <hr class="HrCss1">
+                    <div>
+                        <div class="GDTital_0" id="P1Ci_5">
+                            <span>Relay</span>
+                        </div>
+                        <div id="Relay" style="width:100%"></div>
+                    </div>
+                    <hr class="HrCss1">
+                    <div>
+                        <div class="GDTital_0" id="P1Ci_6">
+                            <span>Control Time</span>
+                        </div>
+                        <div id="ControlTime" style="width:100%"></div>
+                    </div>
+                    <hr class="HrCss1">
+                    <div>
+                        <div class="GDTital_0" id="P1Ci_7">
+                            <span>ATS Gen Power Status</span>
+                        </div>
+                        <div id="AGPS" style="width:100%"></div>
+                    </div>
+                    <hr class="HrCss1">
+                    <div>
+                        <div class="GDTital_0" id="P1Ci_8">
+                            <span>ATS Util Power Status</span>
+                        </div>
+                        <div id="AUPS" style="width:100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="WhiteDiv"></div>
+
+        <div class="SleepDiv" id="SleepDiv1" style="visibility:hidden">
+            <div class="SDL" id="SDTital">Updating...</div>
+            <div class="SPBar0">
+                <div class="SPBar1" id="SPBar">
+
+                </div>
+                <div class="SPBarL" id="SPBarV" style="display:none">
+                    0%
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
